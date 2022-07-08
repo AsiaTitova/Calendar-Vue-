@@ -8,6 +8,11 @@ class calendarService extends Service {
       return resp.data[0];
     });
   }
+  getMonthCalendar(month): Response<any> {
+    return httpClient.get<any>(`months?month=${month}`).then((resp: AxiosResponse<any>) => {
+      return resp.data[0];
+    });
+  }
 }
 
 export default new calendarService();

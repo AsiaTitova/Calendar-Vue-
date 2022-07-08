@@ -35,14 +35,23 @@ export default class CalendarMonthCard extends Vue {
 
 <style scoped lang="scss">
 @import "~@/assets/base/colors";
+@import "~@/assets/base/breakpoints";
 
 .grid-year {
   &__card {
     width: 23%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
+
+    @media (max-width: $xxl) {
+      width: 30%;
+    }
+
+    @media (max-width: $xl) {
+      width: 48%;
+    }
+
+    @media (max-width: $sm) {
+      width: 100%;
+    }
   }
 
   &__month-name {

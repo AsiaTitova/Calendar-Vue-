@@ -1,32 +1,66 @@
 <template>
   <section class="calendar">
-    <h1 class="calendar__title">Календарь, {{ currentYear }}</h1>
+    <h1 class="calendar__title">Календарь, {{currentMonth}} {{ currentYear }}</h1>
     <div class="calendar__wrap">
-      <CalendarGrid :grid="calendarGrid" />
+      <CalendarGrid v-if="isYear" />
+      <CalendarMonthGrid v-if="isMonth" />
+      <CalendarFilters />
     </div>
   </section>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import {Component, Vue, Watch} from "vue-property-decorator";
 import moment from "moment";
 import calendarModule from "@/store/calendarModule";
 import CalendarGrid from "@/components/CalendarYear/CalendarGrid.vue";
+import CalendarFilters from "@/components/CalendarFilters/CalendarFilters.vue";
+import CalendarMonthGrid from "@/components/CalendarMonth/CalendarMonthGrid.vue";
 
 @Component({
-  components: {CalendarGrid}
+  components: {CalendarMonthGrid, CalendarFilters, CalendarGrid}
 })
 export default class CalendarView extends Vue {
   mounted() {
-    calendarModule.getCalendar();
+    this.changeGrid();
   }
 
-  get calendarGrid() {
-    return calendarModule.calendarGrid ? calendarModule.calendarGrid?.months : [];
+  changeGrid() {
+    if (this.isYear) {
+      calendarModule.getCalendar();
+    }
+    if (this.isMonth) {
+      calendarModule.getMonthCalendar(moment().format('YYYY-MM'))
+    }
   }
 
   get currentYear() {
     return calendarModule.calendarGrid && calendarModule.calendarGrid.year ? calendarModule.calendarGrid?.year : moment().format('YYYY');
+  }
+
+  get currentMonth() {
+    return this.isMonth ? moment().locale('ru').format('MMMM') : '';
+  }
+
+  get gridType() {
+    return calendarModule.gridType;
+  }
+
+  get isYear() {
+    return this.gridType?.id === 'year';
+  }
+
+  get isMonth() {
+    return this.gridType?.id === 'month';
+  }
+
+  get isWeek() {
+    return this.gridType?.id === 'week';
+  }
+
+  @Watch('gridType')
+  changeType() {
+    this.changeGrid();
   }
 }
 </script>
@@ -45,6 +79,11 @@ export default class CalendarView extends Vue {
     color: $system-text;
     font-size: 24px;
     line-height: 36px;
+  }
+
+  &__wrap {
+    display: flex;
+    width: 100%;
   }
 }
 </style>
