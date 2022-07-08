@@ -8,6 +8,7 @@ import {
 import store from "@/store";
 import calendarService from "@/store/calendarService";
 import {IMonth, IType, IYear} from "@/store/calendarInterface";
+import moment from "moment";
 
 const name = "calendarModule";
 
@@ -19,6 +20,7 @@ if (store.hasModule(name)) {
 class calendarModule extends VuexModule {
   calendarGrid: IYear | null = null;
   calendarMonthGrid: IMonth | null = null;
+  currentMonth: string = moment().locale('ru').format('MMMM');
   gridType: IType = {
     id: 'year',
     name: 'Год'
@@ -38,6 +40,7 @@ class calendarModule extends VuexModule {
   @Mutation
   setMonthGrid(grid: IMonth) {
     this.calendarMonthGrid = grid;
+    this.currentMonth = grid.month;
   }
 
   @Action

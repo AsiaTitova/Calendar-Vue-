@@ -39,7 +39,9 @@ export default class CalendarView extends Vue {
   }
 
   get currentMonth() {
-    return this.isMonth ? moment().locale('ru').format('MMMM') : '';
+    return this.isMonth && calendarModule.currentMonth
+      ? moment(`${calendarModule.currentMonth}-01`).locale('ru').format('MMMM')
+      : '';
   }
 
   get gridType() {
