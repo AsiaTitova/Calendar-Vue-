@@ -50,7 +50,7 @@ export default class CalendarMonthCard extends Vue {
     font-size: 16px;
     line-height: 20px;
     text-align: right;
-    color: #041b26;
+    color: $system-text;
   }
 }
 
@@ -69,7 +69,7 @@ export default class CalendarMonthCard extends Vue {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #707d83;
+    color: $system-surface;
     font-size: 14px;
     line-height: 20px;
     margin-bottom: 8px;

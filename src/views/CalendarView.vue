@@ -1,7 +1,9 @@
 <template>
   <section class="calendar">
     <h1 class="calendar__title">Календарь, {{ currentYear }}</h1>
-    <CalendarGrid :grid="calendarGrid" />
+    <div class="calendar__wrap">
+      <CalendarGrid :grid="calendarGrid" />
+    </div>
   </section>
 </template>
 
@@ -36,11 +38,11 @@ export default class CalendarView extends Vue {
   width: calc(100% - 72px);
   max-height: 100%;
   padding: 24px 36px;
-  background: #ffffff;
+  background: $system-white;
 
   &__title {
     margin: 0 0 24px;
-    color: #041b26;
+    color: $system-text;
     font-size: 24px;
     line-height: 36px;
   }

@@ -52,18 +52,18 @@ export default class CalendarMonthCell extends Vue {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #041b26;
+  color: $system-text;
   font-size: 14px;
   line-height: 20px;
 
   &_weekends {
-    background: #00aa87;
-    color: #fff;
+    background: $system-primary;
+    color: $system-white;
     border-radius: 4px;
   }
 
   &_short {
-    background: #b2eddd;
+    background: $system-primary-light;
     border-radius: 4px;
   }
 }
