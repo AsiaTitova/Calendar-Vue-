@@ -12,6 +12,7 @@
 import {Component, Prop, Vue} from "vue-property-decorator";
 import CalendarMonthWeek from "@/components/CalendarYear/CalendarMonthWeek.vue";
 import moment from "moment";
+import {IMonth} from "@/store/calendarInterface";
 
 @Component({
   components: {CalendarMonthWeek}
@@ -21,7 +22,7 @@ export default class CalendarMonthCard extends Vue {
     type: Object,
     default: () => null
   })
-  month!: any;
+  month!: IMonth | null;
 
   weekdays: Array<string> = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
 

@@ -26,7 +26,7 @@ export default class CalendarView extends Vue {
   }
 
   get currentYear() {
-    return this.calendarGrid && this.calendarGrid.year ? this.calendarGrid?.year : moment().format('YYYY');
+    return calendarModule.calendarGrid && calendarModule.calendarGrid.year ? calendarModule.calendarGrid?.year : moment().format('YYYY');
   }
 }
 </script>

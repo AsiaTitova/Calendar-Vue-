@@ -7,6 +7,7 @@
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
 import CalendarMonthCell from "@/components/CalendarYear/CalendarMonthCell.vue";
+import {IWeek} from "@/store/calendarInterface";
 
 @Component({
   components: {CalendarMonthCell}
@@ -16,7 +17,7 @@ export default class CalendarMonthWeek extends Vue {
     type: Object,
     default: () => null
   })
-  week!: any;
+  week!: IWeek | null;
 }
 </script>
 

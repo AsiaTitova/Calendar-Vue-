@@ -7,6 +7,7 @@
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
 import moment from "moment";
+import {IDay} from "@/store/calendarInterface";
 
 @Component
 export default class CalendarMonthCell extends Vue {
@@ -14,7 +15,7 @@ export default class CalendarMonthCell extends Vue {
     type: Array,
     default: () => []
   })
-  days!: Array<any>;
+  days!: Array<IDay>;
   @Prop({
     type: Number,
     default: 0

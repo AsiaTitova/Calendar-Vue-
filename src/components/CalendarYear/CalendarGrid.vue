@@ -7,6 +7,7 @@
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
 import CalendarMonthCard from "@/components/CalendarYear/CalendarMonthCard.vue";
+import {IMonth} from "@/store/calendarInterface";
 @Component({
   components: {CalendarMonthCard}
 })
@@ -15,7 +16,7 @@ export default class CalendarGrid extends Vue {
     type: Array,
     default: () => []
   })
-  grid!: Array<any>;
+  grid!: Array<IMonth>;
 
 }
 </script>

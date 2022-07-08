@@ -7,6 +7,7 @@ import {
 } from "vuex-module-decorators";
 import store from "@/store";
 import calendarService from "@/store/calendarService";
+import {IYear} from "@/store/calendarInterface";
 
 const name = "calendarModule";
 
@@ -16,7 +17,7 @@ if (store.hasModule(name)) {
 
 @Module({ dynamic: true, namespaced: true, name, stateFactory: true, store })
 class calendarModule extends VuexModule {
-  calendarGrid: any = null;
+  calendarGrid: IYear | null = null;
 
   @Mutation
   setCalendarGrid(grid: any) {
