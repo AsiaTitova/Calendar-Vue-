@@ -20,6 +20,7 @@ if (store.hasModule(name)) {
 class calendarModule extends VuexModule {
   calendarGrid: IYear | null = null;
   calendarMonthGrid: IMonth | null = null;
+  calendarWeekGrid: IMonth | null = null;
   currentMonth: string = moment().locale('ru').format('MMMM');
   gridType: IType = {
     id: 'year',
@@ -36,16 +37,20 @@ class calendarModule extends VuexModule {
     this.gridType = type;
   }
 
-
   @Mutation
   setMonthGrid(grid: IMonth) {
     this.calendarMonthGrid = grid;
     this.currentMonth = grid.month;
   }
 
+  @Mutation
+  setWeekGrid(grid: IMonth) {
+    this.calendarWeekGrid = grid;
+  }
+
   @Action
-  async getCalendar() {
-    const grid = await calendarService.getCalendar();
+  async getCalendar(year) {
+    const grid = await calendarService.getCalendar(year);
     if (grid)
       this.setCalendarGrid(grid);
   }
@@ -55,6 +60,13 @@ class calendarModule extends VuexModule {
     const grid = await calendarService.getMonthCalendar(months);
     if (grid)
       this.setMonthGrid(grid);
+  }
+
+  @Action
+  async getWeekCalendar(week) {
+    const grid = await calendarService.getWeekCalendar(week);
+    if (grid)
+      this.setWeekGrid(grid);
   }
 }
 

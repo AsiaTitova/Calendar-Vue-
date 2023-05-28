@@ -13,7 +13,6 @@
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
 import {IType} from "@/store/calendarInterface";
-import calendarModule from "@/store/calendarModule";
 import TypeItem from "@/components/CalendarFilters/TypeFilter/TypeItem.vue";
 @Component({
   components: {TypeItem}

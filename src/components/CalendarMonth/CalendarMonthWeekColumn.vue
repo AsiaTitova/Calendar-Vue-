@@ -39,6 +39,7 @@ export default class CalendarMonthWeekColumn extends Vue {
 .grid-month{
   &__week {
     width: 100%;
+    height: 16.55%;
     display: flex;
     align-items: center;
     justify-content: space-between;

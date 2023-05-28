@@ -1,8 +1,13 @@
 <template>
   <ul class="month-filter">
-    <li class="month-filter__item" v-for="month in months" :key="month.id">
+    <li
+      class="month-filter__item"
+      v-for="month in months"
+      :key="month.id"
+    >
       <UiButton
         :title="month.name"
+        :isActive="isActive(month)"
         @handleButton="changeMonth(month)"
       />
     </li>
@@ -13,20 +18,32 @@
 import {Component, Prop, Vue} from "vue-property-decorator";
 import moment from "moment";
 import UiButton from "@/components/UiComponents/Button/UiButton.vue";
+import calendarModule from "@/store/calendarModule";
 @Component({
   components: {UiButton}
 })
 export default class MonthFilter extends Vue {
+  // props
   @Prop({
     type: String,
     default: moment().format('YYYY')
   })
-  year!: string;
+  year!: any;
 
+  // data
+  currentMonth: string | number | null = null;
+
+  // methods
   changeMonth(month) {
+    this.currentMonth = month;
     this.$emit('changeMonth', month)
   }
 
+  isActive(month) {
+    return month.id === calendarModule.currentMonth
+  }
+
+  // computed
   get months() {
     return [
       {

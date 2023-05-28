@@ -2,8 +2,20 @@
     <div
       :class="['grid-month__day', 'day', `day_${weekday}`, `day_week-${weekNumber}`, { 'day_weekends': isWeekend }]"
       :style="setClassStyle"
+      id="timeCel"
     >
       <p :class="['day__number', {'day__number_today': isToday, 'day__number_weekends': isWeekend}]">{{setDayNumber}}</p>
+      <ul class="day__list">
+        <CalendarEventCard
+          v-for="(event, index) in setEvents"
+          :key="event.id"
+          :event="event"
+          :count="setEvents.length"
+          :index="index"
+          :cellWidth="cellWidth"
+          :cellHeight="cellHeight"
+        />
+      </ul>
     </div>
 </template>
 
@@ -11,9 +23,12 @@
 import {Component, Prop, Vue} from "vue-property-decorator";
 import {IDay} from "@/store/calendarInterface";
 import moment from "moment";
-
-@Component
+import CalendarEventCard from "@/components/CalendarEventCard/CalendarEventCard.vue";
+@Component({
+  components: {CalendarEventCard}
+})
 export default class CalendarMonthDay extends Vue {
+  // props
   @Prop({
     type: Array,
     default: () => []
@@ -35,12 +50,32 @@ export default class CalendarMonthDay extends Vue {
   })
   weekLength!: number;
 
+  line: number = 0;
+  cellWidth: number = 0;
+  cellHeight: number = 0;
+  load: boolean = false;
+  tooltipUser: Array<any> = [];
+
+  /**
+   * set width and height cell.
+   */
+  resizeTableCell() {
+    const cell = document.getElementById('timeCel')!;
+    this.cellWidth = cell.offsetWidth;
+    this.cellHeight = cell.offsetHeight;
+  }
+
+  // computed
   get setDay() {
     return this.days.length
       ? this.weekday === 7
         ? this.days.find(item => new Date(item.id).getDay() === 0)
         : this.days.find(item => new Date(item.id).getDay() === this.weekday)
       : null;
+  }
+
+  get setEvents() {
+    return this.setDay && this.setDay.events ? this.setDay.events : []
   }
 
   get setDayNumber() {
@@ -71,10 +106,10 @@ export default class CalendarMonthDay extends Vue {
 
 .day {
   width: 13%;
-  height: 120px;
+  height: calc(100% - 16px);
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
   padding: 8px;
 
   &:not(.day_7) {
@@ -90,6 +125,7 @@ export default class CalendarMonthDay extends Vue {
   }
 
   &__number {
+    margin: 0;
     padding: 4px 8px;
     color: $system-text;
     font-size: 14px;
@@ -97,14 +133,22 @@ export default class CalendarMonthDay extends Vue {
     border-radius: 4px;
     font-weight: 500;
 
+    &_weekends {
+      color: $system-primary;
+    }
+
     &_today {
       background: $system-primary;
       color: $system-white;
     }
+  }
 
-    &_weekends {
-      color: $system-primary;
-    }
+  &__list {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 }
 </style>

@@ -2,22 +2,32 @@
   <div class="calendar__filters filters">
     <h3 class="filters__label">Тип календаря</h3>
     <TypeFilter :types="types" :activeType="gridType" @changeActiveType="setGridType" />
-    <h3 class="filters__label" v-if="isMonth">Выбор месяца</h3>
-    <MonthFilter v-if="isMonth" :year="'2022'" @changeMonth="changeMonth" />
+    <h3 class="filters__label" v-if="!isWeek">{{ isFilterLabel }}</h3>
+    <YearsFilter v-if="isYear" @changeYear="changeYear" />
+    <MonthFilter v-if="isMonth" :year="currentYear" @changeMonth="changeMonth" />
   </div>
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import {Component, Prop, Vue} from "vue-property-decorator";
 import {IType} from "@/store/calendarInterface";
 import TypeFilter from "@/components/CalendarFilters/TypeFilter/TypeFilter.vue";
 import calendarModule from "@/store/calendarModule";
 import MonthFilter from "@/components/CalendarFilters/MonthFilter/MonthFilter.vue";
 import moment from "moment";
+import YearsFilter from "@/components/CalendarFilters/YearsFilter/YearsFilter.vue";
 @Component({
-  components: {MonthFilter, TypeFilter}
+  components: {YearsFilter, MonthFilter, TypeFilter}
 })
 export default class CalendarFilters extends Vue {
+  // props
+  @Prop({
+    type: String,
+    default: moment().format('YYYY')
+  })
+  currentYear!: any;
+
+  // data
   types: Array<IType> = [
     {
       id: 'year',
@@ -33,6 +43,7 @@ export default class CalendarFilters extends Vue {
     }
   ]
 
+  // methods
   setGridType(type) {
     calendarModule.setCalendarType(type);
   }
@@ -41,6 +52,11 @@ export default class CalendarFilters extends Vue {
     calendarModule.getMonthCalendar(moment(`${month.id}-01`).format('YYYY-MM'))
   }
 
+  changeYear(year) {
+    calendarModule.getCalendar(year)
+  }
+
+  // computed
   get gridType() {
     return calendarModule.gridType;
   }
@@ -55,6 +71,16 @@ export default class CalendarFilters extends Vue {
 
   get isWeek() {
     return this.gridType?.id === 'week';
+  }
+
+  get isFilterLabel() {
+    if (this.isYear) {
+      return 'Выбор года'
+    } else if (this.isMonth) {
+      return 'Выбор месяца'
+    } else {
+      return 'Выбор недели'
+    }
   }
 
 

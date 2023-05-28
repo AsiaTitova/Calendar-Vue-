@@ -4,7 +4,20 @@
       <li class="week-day__item" v-for="(day, index) in weekdays" :key="index">{{ day }}</li>
     </ul>
     <div class="grid-month__wrap">
-      <CalendarMonthWeekColumn v-for="week in calendarGrid" :key="week.id" :week="week" :weekLength="calendarGrid.length" />
+      <CalendarMonthWeekColumn
+        v-for="week in calendarGrid"
+        :key="week.id"
+        :week="week"
+        :weekLength="calendarGrid.length"
+      />
+      <template v-if="calendarGrid.length < 6">
+        <CalendarMonthWeekColumn
+          v-for="(week, index) in 1"
+          :key="index"
+          :week="setWeekPlug(week)"
+          :weekLength="7"
+        />
+      </template>
     </div>
   </div>
 </template>
@@ -18,6 +31,13 @@ import CalendarMonthWeekColumn from "@/components/CalendarMonth/CalendarMonthWee
 })
 export default class CalendarMonthGrid extends Vue {
   weekdays: Array<string> = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
+
+  setWeekPlug(week) {
+    return {
+      id: week,
+      days: []
+    }
+  }
 
   get calendarGrid() {
     return calendarModule.calendarMonthGrid ? calendarModule.calendarMonthGrid?.weeks : [];
@@ -43,7 +63,6 @@ export default class CalendarMonthGrid extends Vue {
     border-radius: 16px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     flex-wrap: wrap;
     flex-direction: column;
     width: 100%;
