@@ -1,11 +1,24 @@
 # Calendar (Vue.js, VueX, moment, decorator, TS)
 
+Версия node: v14.17.6
+
+Установка пакетов
+
+````
+npm install
+````
 
 # Команды
 
-npm run fake-json - запуск son-server (получение производственного календаря);
+Запуск son-server (получение производственного календаря)
+````
+npm run fake-json
+````
 
-npm run serve - сборка проекта
+Сборка проекта
+````
+npm run serve
+````
 
 ...............................................................................
 
@@ -25,3 +38,8 @@ npm run serve - сборка проекта
 Планируется
 
 1. Мероприятия (CRUD), Фильтрация по мероприятиям
+
+
+# Статистика
+
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=AsiaTitova)](https://github.com/anuraghazra/github-readme-stats)
