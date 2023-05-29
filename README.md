@@ -38,8 +38,3 @@ npm run serve
 Планируется
 
 1. Мероприятия (CRUD), Фильтрация по мероприятиям
-
-
-# Статистика
-
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=AsiaTitova)](https://github.com/anuraghazra/github-readme-stats)
